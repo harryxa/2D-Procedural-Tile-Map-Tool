@@ -9,14 +9,6 @@ public class Tile
 
     public Tile (Type type)
     {
-
-		if (Random.Range (0, 2) == 0) 
-		{
-			this.type = Type.Dirt;
-		}
-		else
-		{
-			this.type = Type.Grass;
-		}   
+		this.type = type;
     }
 }

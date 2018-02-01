@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class Tile
 {
-    public enum Type { Stone }
+    public enum Type { Dirt, Grass }
     public Type type;
 
     public Tile (Type type)
     {
-        //Debug.Log(type.ToString());
-        this.type = type;
+
+		if (Random.Range (0, 2) == 0) 
+		{
+			this.type = Type.Dirt;
+		}
+		else
+		{
+			this.type = Type.Grass;
+		}   
     }
 }

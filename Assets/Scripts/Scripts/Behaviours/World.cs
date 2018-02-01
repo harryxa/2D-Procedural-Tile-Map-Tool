@@ -6,6 +6,8 @@ public class World : MonoBehaviour
 {
     public static World instance;
 
+	public Material material;
+
     public int width;
     public int height;
 
@@ -35,7 +37,7 @@ public class World : MonoBehaviour
         {
             for(int j = 0; j < height; j ++)
             {
-                tiles[i, j] = new Tile(Tile.Type.Stone);
+                tiles[i, j] = new Tile(Tile.Type.Grass);
             }
         }
     }
@@ -85,12 +87,14 @@ public class World : MonoBehaviour
         meshGO.transform.SetParent(this.transform);
 
         MeshFilter filter = meshGO.AddComponent < MeshFilter>();
-        meshGO.AddComponent<MeshRenderer>();
+		MeshRenderer render = meshGO.AddComponent<MeshRenderer>();
+		render.material = material;
 
         Mesh mesh = filter.mesh;
 
         mesh.vertices = data.vertices.ToArray();
-        mesh.triangles = data.triangles.ToArray();        
+        mesh.triangles = data.triangles.ToArray();
+		mesh.uv = data.UVs.ToArray ();
     }
 
     public Tile GetTileAt (int x, int y)

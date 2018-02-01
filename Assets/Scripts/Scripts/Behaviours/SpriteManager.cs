@@ -13,14 +13,15 @@ public class SpriteManager : MonoBehaviour
 		instance = this;
 		tileUVMap = new Dictionary<string, Vector2[]> ();
 
+		//load array of sprites from resource folder
 		Sprite[] sprites = Resources.LoadAll<Sprite> ("");
 
 		float imageWidth = 0f;
 		float imageHeight = 0f;
 
+		//sets the size of the sprite
 		foreach (Sprite s in sprites) 
 		{
-			//Debug.Log (s.name + "|" + s.rect);
 			if (s.rect.x + s.rect.width > imageWidth)
 				imageWidth = s.rect.x + s.rect.width;
 
@@ -41,12 +42,6 @@ public class SpriteManager : MonoBehaviour
 
 			Debug.LogFormat (s.name + ": " + uvs [0] + ", " + uvs [1] + ", " + uvs [2] + ", " + uvs [3]);
 		}
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-		
 	}
 
 	public Vector2[] GetTileUvs (Tile tile)

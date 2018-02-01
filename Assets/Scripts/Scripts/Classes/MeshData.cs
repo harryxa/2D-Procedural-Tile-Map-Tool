@@ -12,8 +12,9 @@ public class MeshData
     {
 
         vertices = new List<Vector3>();
-		UVs = new List<Vector2> ();
         triangles = new List<int>();
+		UVs = new List<Vector2> ();
+
         for (int i = x; i < width + x;i++)
         {
             for (int j = y; j < height + y; j++)
@@ -23,11 +24,12 @@ public class MeshData
         }
     }
 
+	//takes position of tile
     void CreateSquare ( int x, int y)
     {
         Tile tile = World.instance.GetTileAt(x, y);
 
-
+		//create square with vertices
         vertices.Add(new Vector3(x + 0, y + 0));
         vertices.Add(new Vector3(x + 1, y + 0));
         vertices.Add(new Vector3(x + 0, y + 1));

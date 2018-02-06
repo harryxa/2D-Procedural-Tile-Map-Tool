@@ -7,6 +7,15 @@ public class Noise
 
 	int seed;
 
+	public int Seed {
+		get {
+			return seed;
+		}
+		set {
+			seed = value;
+		}
+	}
+
 	float frequency;
 	float amplitude;
 
@@ -58,14 +67,12 @@ public class Noise
 
 		for(int i = 0; i <width; i++)
 		{
-			for(int j = 0; j <width; j++)
+			for(int j = 0; j <height; j++)
 			{
 
 				noiseValues[i,j] = Mathf.InverseLerp(max, min, noiseValues[i,j]);
 			}
 		}
-
 		return noiseValues;
 	}
-
 }

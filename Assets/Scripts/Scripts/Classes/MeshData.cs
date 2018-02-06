@@ -27,6 +27,7 @@ public class MeshData
 	//takes position of tile
     void CreateSquare ( int x, int y)
     {
+		//gets tile at x, y coords
         Tile tile = World.instance.GetTileAt(x, y);
 
 		//create square with vertices
@@ -43,6 +44,23 @@ public class MeshData
         triangles.Add(vertices.Count - 1);
         triangles.Add(vertices.Count - 4);
 
-		UVs.AddRange(SpriteManager.instance.GetTileUvs(tile));
+		//returns tile uv coords for that type of tile
+		UVs.AddRange(SpriteManager.instance.GetTileUvs(tile));	
     }
+
+	public void RewriteUV(int x, int y, int width, int height)
+	{
+		UVs = new List<Vector2> ();
+	
+
+		for (int i = x; i < width + x; i++) 
+		{
+			for (int j = y; j < height + y; j++) 
+			{
+				Tile tile = World.instance.GetTileAt (i, j);
+				UVs.AddRange (SpriteManager.instance.GetTileUvs (tile));	
+
+			}
+		}
+	}
 }

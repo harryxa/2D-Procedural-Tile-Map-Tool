@@ -19,7 +19,7 @@ public class SpriteManager : MonoBehaviour
 		float imageWidth = 0f;
 		float imageHeight = 0f;
 
-		//sets the size of the sprite
+		//finds the size of the sprite in image
 		foreach (Sprite s in sprites) 
 		{
 			if (s.rect.x + s.rect.width > imageWidth)
@@ -29,6 +29,7 @@ public class SpriteManager : MonoBehaviour
 				imageHeight = s.rect.y + s.rect.height;
 		}
 
+		//calculates uvs for texture
 		foreach (Sprite s in sprites) 
 		{
 			Vector2[] uvs = new Vector2[4];
@@ -38,12 +39,15 @@ public class SpriteManager : MonoBehaviour
 			uvs [2] = new Vector2 (s.rect.x / imageWidth, (s.rect.y + s.rect.height)/ imageHeight);
 			uvs [3] = new Vector2 ((s.rect.x + s.rect.width) / imageWidth, (s.rect.y + s.rect.height) / imageHeight);
 
+			//returns  coords of tile uv map
 			tileUVMap.Add (s.name, uvs);
 
-			Debug.LogFormat (s.name + ": " + uvs [0] + ", " + uvs [1] + ", " + uvs [2] + ", " + uvs [3]);
+			//Debug.LogFormat (s.name + ": " + uvs [0] + ", " + uvs [1] + ", " + uvs [2] + ", " + uvs [3]);
 		}
 	}
 
+
+	//returns coords of uv map for tile 
 	public Vector2[] GetTileUvs (Tile tile)
 	{
 		string key = tile.type.ToString ();

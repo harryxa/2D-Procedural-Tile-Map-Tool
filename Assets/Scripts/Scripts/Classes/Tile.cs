@@ -9,6 +9,7 @@ public class Tile
     public enum Type { Dirt, Grass, Cobble, Water, Sand, Void }
     public Type type;
 
+
 	//constructor to create and assign tile
     public Tile (Type type)
     {

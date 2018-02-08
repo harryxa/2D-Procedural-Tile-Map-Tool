@@ -17,12 +17,59 @@ public class Noise
 	}
 
 	float frequency;
+
+	public float Frequency {
+		get {
+			return frequency;
+		}
+		set {
+			frequency = value;
+		}
+	}
+
 	float amplitude;
 
+	public float Amplitude {
+		get {
+			return amplitude;
+		}
+		set {
+			amplitude = value;
+		}
+	}
+
 	float lacunarity;
+
+	public float Lacunarity {
+		get {
+			return lacunarity;
+		}
+		set {
+			lacunarity = value;
+		}
+	}
+
 	float persistance;
 
+	public float Persistance {
+		get {
+			return persistance;
+		}
+		set {
+			persistance = value;
+		}
+	}
+
 	int octaves;
+
+	public int Octaves {
+		get {
+			return octaves;
+		}
+		set {
+			octaves = value;
+		}
+	}
 
 	public Noise(int seed, float frequency, float amplitude, float lacunarity, float persistance, int octaves)
 	{

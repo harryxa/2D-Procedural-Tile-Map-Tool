@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MeshGameObject : MonoBehaviour 
 {
-	int x;
+	public int x;
 
 	public int X {
 		get {
@@ -15,7 +15,7 @@ public class MeshGameObject : MonoBehaviour
 		}
 	}
 
-	int y;
+	public int y;
 
 	public int Y {
 		get {
@@ -26,7 +26,7 @@ public class MeshGameObject : MonoBehaviour
 		}
 	}
 
-	int width;
+	public int width;
 
 	public int Width {
 		get {
@@ -37,7 +37,7 @@ public class MeshGameObject : MonoBehaviour
 		}
 	}
 
-	int height;
+	public int height;
 
 	public int Height {
 		get {
@@ -47,4 +47,6 @@ public class MeshGameObject : MonoBehaviour
 			height = value;
 		}
 	}
+
+
 }

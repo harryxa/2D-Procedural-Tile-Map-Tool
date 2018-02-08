@@ -10,7 +10,6 @@ public class MeshData
 
     public MeshData (int x, int y, int width, int height)
     {
-
         vertices = new List<Vector3>();
         triangles = new List<int>();
 		UVs = new List<Vector2> ();
@@ -50,16 +49,14 @@ public class MeshData
 
 	public void RewriteUV(int x, int y, int width, int height)
 	{
-		UVs = new List<Vector2> ();
-	
+		UVs = new List<Vector2> ();	
 
 		for (int i = x; i < width + x; i++) 
 		{
 			for (int j = y; j < height + y; j++) 
 			{
 				Tile tile = World.instance.GetTileAt (i, j);
-				UVs.AddRange (SpriteManager.instance.GetTileUvs (tile));	
-
+				UVs.AddRange (SpriteManager.instance.GetTileUvs (tile));
 			}
 		}
 	}

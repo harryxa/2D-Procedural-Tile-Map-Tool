@@ -18,6 +18,7 @@ public class World : MonoBehaviour
 	MeshData data;
 	int meshGOvalue = 0;
 
+	public bool randomiseMap = false;
 	public string seed;
 	public bool randomSeed;
 
@@ -71,24 +72,17 @@ public class World : MonoBehaviour
         SubdivideTilesArray();        
 	}
 	
-	float randomizeTileTimer= 0f;
+	float randomizeTileTimer= 2f;
 
 	void Update () 
 	{
-		randomizeTileTimer -= Time.deltaTime;
-		if (randomizeTileTimer < 0)
-		{
-			//seaLevel = 5f;
-			//RandomizeMap ();
-
-			randomizeTileTimer = 0f;
-
-			//causing huge fps drop
-			//OnTileTypeChange ();
+		if (randomiseMap == true) {
+			RandomizeMap ();
+			randomiseMap = false;
 		}
 	}
 
-	//TODO: redraw mesh only when necessary
+	//redraws chunk dependant on the chunk number
 	public void OnTileTypeChange (int chunkNumber)
 	{
 
@@ -98,8 +92,6 @@ public class World : MonoBehaviour
 
 		MeshGameObject meshScript = chunk.GetComponent<MeshGameObject> ();
 
-
-		//if(chunk.changed = true)
 		data.RewriteUV (meshScript.X, meshScript.Y, meshScript.Width, meshScript.Height);
 		mesh.uv = data.UVs.ToArray ();	
 
@@ -108,7 +100,6 @@ public class World : MonoBehaviour
 	//create an array of tiles with a type
     void CreateTile()
     {
-
         tiles = new Tile[width, height];
 
 		//returns a perlin noise value
@@ -117,18 +108,13 @@ public class World : MonoBehaviour
         for (int i = 0; i < width; i++)
         {
             for(int j = 0; j < height; j ++)
-			{
-				
+			{				
 				//initalise each tile in tiles array
 				tiles[i,j] = SetTileAtHeight(noiseValues[i,j]);
 				tiles [i, j].X = i;
 				tiles [i, j].Y = j;
-
-
-				//tiles[i,j].RegisterTileTypeChanged((tile) => {OnTileTypeChange();});
        	 	}
     	}
-		//tiles [49, 49].type = Tile.Type.Void;
 	}
 
 	Tile SetTileAtHeight(float currentHeight, Tile tile = null)
@@ -193,6 +179,9 @@ public class World : MonoBehaviour
 				tiles[i,j] = SetTileAtHeight(noiseValues[i,j], tiles[i,j]);           
 			}
 		}	
+		for (int i = 0; i < meshGOvalue; i++) {
+			OnTileTypeChange (i);
+		}
 	}
 
 	//divide tile array into increments to create 100 x 100 mesh

@@ -7,6 +7,11 @@ public class MouseManager : MonoBehaviour {
 	public GameObject cursor;
 	Vector3 lastMousePosition;
 
+	//scrolling or zooming
+	float minFov = 10f;
+	float maxFov = 100f;
+	float sensitivity = 20f;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -33,10 +38,8 @@ public class MouseManager : MonoBehaviour {
 			if (tileUnderMouse != null) {
 				tileUnderMouse.type = Tile.Type.Void;
 				Debug.Log (tileUnderMouse.chunkNumber);
-
+				World.instance.OnTileTypeChange (tileUnderMouse.chunkNumber);
 			}
-			World.instance.OnTileTypeChange (tileUnderMouse.chunkNumber);
-
 		}
 
 		//screen dragging using middle and right click
@@ -45,6 +48,12 @@ public class MouseManager : MonoBehaviour {
 			Vector3 diff = lastMousePosition - currMousePos;
 			Camera.main.transform.Translate (diff);
 		}
+
+		//handles mouse scrolling
+		float fov = Camera.main.orthographicSize;
+		fov -= Input.GetAxis("Mouse ScrollWheel") * sensitivity;
+		fov = Mathf.Clamp(fov, minFov, maxFov);
+		Camera.main.orthographicSize = fov;
 
 		lastMousePosition = Camera.main.ScreenToWorldPoint (Input.mousePosition);
 	}

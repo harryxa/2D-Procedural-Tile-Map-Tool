@@ -16,6 +16,7 @@ public class World : MonoBehaviour
     public Tile[,] tiles;
 
 	MeshData data;
+    MeshData MountainData;
 	int meshGOvalue = 0;
 	int meshGOMountainvalue = 0;
 
@@ -85,25 +86,34 @@ public class World : MonoBehaviour
 	void Update () 
 	{
 		if (randomiseMap == true) {
-			RandomizeMap ();
+			//RandomizeMap ();
 			randomiseMap = false;
 		}
 	}
 
 	//redraws chunk dependant on the chunk number
-	public void OnTileTypeChange (int chunkNumber)
+	public void OnTileTypeChange (int chunkNumber, int MountainChunkNumber)
 	{
-
+       
 		GameObject chunk = GameObject.Find ("CHUNK " + chunkNumber);
-		MeshFilter filter = chunk.GetComponent<MeshFilter> ();
-		Mesh mesh = filter.mesh;
-
+		MeshFilter chunkFilter = chunk.GetComponent<MeshFilter> ();
+		Mesh chunkMesh = chunkFilter.mesh;
 		MeshGameObject meshScript = chunk.GetComponent<MeshGameObject> ();
 
 		data.RewriteUV (meshScript.X, meshScript.Y, meshScript.Width, meshScript.Height);
-		mesh.uv = data.UVs.ToArray ();	
+		chunkMesh.uv = data.UVs.ToArray ();
 
-	}
+        GameObject mountainChunk = GameObject.Find("MountainLayer " + MountainChunkNumber);
+        MeshFilter mountainFilter = mountainChunk.GetComponent<MeshFilter>();
+        Mesh mountainMesh = mountainFilter.mesh;
+        MeshGameObject mountainMeshScript = mountainChunk.GetComponent<MeshGameObject>();
+
+        MountainData.RewriteMountainUV(mountainMeshScript.X, mountainMeshScript.Y, mountainMeshScript.Width, mountainMeshScript.Height);
+        mountainMesh.uv = MountainData.UVs.ToArray();
+
+
+
+    }
 
 	//create an array of tiles with a type
     void CreateTile()
@@ -185,7 +195,7 @@ public class World : MonoBehaviour
 		}
 	}
 
-	void RandomizeMap()
+	/*void RandomizeMap()
 	{		
 		int value = Random.Range (-10000, 10000);
 		noise.Seed = value;
@@ -208,7 +218,7 @@ public class World : MonoBehaviour
 		for (int i = 0; i < meshGOvalue; i++) {
 			OnTileTypeChange (i);
 		}
-	}
+	}*/
 
 	//GROUND TILES
 	//divide tile array into increments to create 100 x 100 mesh
@@ -346,17 +356,17 @@ public class World : MonoBehaviour
 	void GenerateMountainLayer(int x, int y, int width, int height)
 	{
 		//create mesh at coords of 100 x 100 tiles
-		data = new MeshData(x, y, width, height, true);
+		MountainData = new MeshData(x, y, width, height, true);
 
 		//new chunk gameobject, child of world, with id
 		GameObject meshGO = new GameObject("MountainLayer " + meshGOMountainvalue);
 
-		MeshGameObject meshScript = meshGO.AddComponent<MeshGameObject> ();
+		MeshGameObject mountainMeshScript = meshGO.AddComponent<MeshGameObject> ();
 
-		meshScript.X = x;
-		meshScript.Y = y;
-		meshScript.Width = width;
-		meshScript.Height = height;
+        mountainMeshScript.X = x;
+        mountainMeshScript.Y = y;
+        mountainMeshScript.Width = width;
+        mountainMeshScript.Height = height;
 
 		meshGO.transform.SetParent(this.transform);
 
@@ -368,10 +378,10 @@ public class World : MonoBehaviour
 		Mesh mesh = filter.mesh;
 
 		//create vertices, triangles and uvs from meshdata
-		mesh.vertices = data.vertices.ToArray();
-		mesh.triangles = data.triangles.ToArray();
+		mesh.vertices = MountainData.vertices.ToArray();
+		mesh.triangles = MountainData.triangles.ToArray();
 
-		mesh.uv = data.UVs.ToArray ();
+		mesh.uv = MountainData.UVs.ToArray ();
 
 		for (int i = x; i <  x + width; i++) 
 		{

@@ -97,11 +97,11 @@ public class MouseManager : MonoBehaviour {
 						if (previousTile == null) 
 						{
 							previousTile = t;
-							World.instance.OnTileTypeChange (t.chunkNumber);
+							World.instance.OnTileTypeChange (t.chunkNumber, t.mountainChunkNumber);
 						}
 
 						if (t.chunkNumber != previousTile.chunkNumber)
-						World.instance.OnTileTypeChange (t.chunkNumber);
+						World.instance.OnTileTypeChange (t.chunkNumber, t.mountainChunkNumber);
 
 						previousTile = t;
 					}

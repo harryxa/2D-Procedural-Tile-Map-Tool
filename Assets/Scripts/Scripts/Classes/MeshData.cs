@@ -114,4 +114,17 @@ public class MeshData
 			}
 		}
 	}
+    public void RewriteMountainUV(int x, int y, int width, int height)
+    {
+        UVs = new List<Vector2>();
+
+        for (int i = x; i < width + x; i++)
+        {
+            for (int j = y; j < height + y; j++)
+            {
+                Tile tile = World.instance.GetTileAt(i, j);
+                UVs.AddRange(SpriteManager.instance.GetMountainTileUvs(tile));
+            }
+        }
+    }
 }

@@ -53,6 +53,7 @@ public class SpriteManager : MonoBehaviour
 		string key = tile.type.ToString ();
 
 		if (tileUVMap.ContainsKey (key) == true) {
+            
 			return tileUVMap [key];
 		} else {
 
@@ -61,9 +62,26 @@ public class SpriteManager : MonoBehaviour
 		}
 	}
 
+    public Vector2[] GetMountainTileUvs(Tile tile)
+    {
+        string key = tile.wall.ToString();
+
+        if (tileUVMap.ContainsKey(key) == true)
+        {
+
+            return tileUVMap[key];
+        }
+        else
+        {
+
+            Debug.LogError("No UV map for tile type: " + key);
+            return tileUVMap["Void"];
+        }
+    }
 
 
-	public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant)
+
+    public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant)
 	{
 		if (wall == Tile.Wall.Empty)
 			return tileUVMap ["Empty"];

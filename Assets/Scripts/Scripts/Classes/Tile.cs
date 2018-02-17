@@ -7,11 +7,14 @@ using System;
 public class Tile
 {
 	
-    public enum Type { Dirt, Grass, Cobble, Water, Sand, Void }
+    public enum Type { Dirt, Grass, Smooth_Stone, Deep_Water, Shallow_Water, Sand, Void }
+
 
 	public Type type;
 	public int chunkNumber;
 	public bool changed = false;
+
+	InstalledObjects installedObjects;
 
 	public int ChunkNumber {
 		get {

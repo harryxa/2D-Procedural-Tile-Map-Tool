@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9718c34ae410bb94697ad350d4698cde
-timeCreated: 1517497159
+timeCreated: 1518114856
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,18 +11,18 @@ TextureImporter:
     21300008: ground_tiles_4
     21300010: LightStoneWall
     21300012: DarkStoneWall
-    21300014: Gravel
+    21300014: Smooth_Stone
     21300016: Dirt
     21300018: Cobble
     21300020: ground_tiles_10
     21300022: Wood
     21300024: ground_tiles_12
     21300026: ground_tiles_13
-    21300028: ground_tiles_14
+    21300028: Deep_Water
     21300030: ground_tiles_15
     21300032: ground_tiles_16
     21300034: ground_tiles_17
-    21300036: Water
+    21300036: Shallow_Water
     21300038: ground_tiles_19
     21300040: MarbleFloor
     21300042: Grass
@@ -70,7 +70,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -81,7 +81,7 @@ TextureImporter:
   textureFormatSet: 0
   platformSettings:
   - buildTarget: DefaultTexturePlatform
-    maxTextureSize: 512
+    maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
@@ -89,13 +89,13 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
-    maxTextureSize: 512
-    textureFormat: -1
+    maxTextureSize: 2048
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 0
+    overridden: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -191,7 +191,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Gravel
+      name: Smooth_Stone
       rect:
         serializedVersion: 2
         x: 0
@@ -282,7 +282,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_14
+      name: Deep_Water
       rect:
         serializedVersion: 2
         x: 0
@@ -334,7 +334,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Water
+      name: Shallow_Water
       rect:
         serializedVersion: 2
         x: 128

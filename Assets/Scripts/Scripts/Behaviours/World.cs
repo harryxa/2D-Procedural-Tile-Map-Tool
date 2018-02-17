@@ -28,7 +28,10 @@ public class World : MonoBehaviour
 	public float persistance;
 	public int octaves;
 
-	public float seaLevel;
+	public float deepWaterEnd;
+
+	float shallowWaterStart;
+	public float shallowWaterEnd;
 
 	float sandStartHeight;
 	public float sandEndHeight;
@@ -58,7 +61,8 @@ public class World : MonoBehaviour
 
 		noise = new Noise (seed.GetHashCode (), frequency, amplitude, lacunarity, persistance, octaves);
 
-		sandStartHeight = seaLevel;
+		shallowWaterStart = deepWaterEnd;
+		sandStartHeight = shallowWaterEnd;
 		dirtStartHeight = sandEndHeight;
 		grassStartHeight = dirtEndHeight;
 		cobbleStartHeight = grassEndHeight;
@@ -122,8 +126,11 @@ public class World : MonoBehaviour
 		//if tile hasnt been initialised return new tile type
 
 		if (tile == null) {
-			if (currentHeight <= seaLevel)
-				return new Tile (Tile.Type.Water);
+			if (currentHeight <= deepWaterEnd)
+				return new Tile (Tile.Type.Deep_Water);
+			
+			if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd)
+				return new Tile (Tile.Type.Shallow_Water);
 
 			if (currentHeight >= sandStartHeight && currentHeight <= sandEndHeight)
 				return new Tile (Tile.Type.Sand);
@@ -131,18 +138,27 @@ public class World : MonoBehaviour
 			if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight)
 				return new Tile (Tile.Type.Dirt);
 
-			if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight)
+			if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) 
+			{
+				//TODO: repeat changes in else
+
+
+
 				return new Tile (Tile.Type.Grass);
+			}
+				
 
 			if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight)
-				return new Tile (Tile.Type.Cobble);
+				return new Tile (Tile.Type.Smooth_Stone);
 
 			return new Tile (Tile.Type.Void);
 		} 
 		//else change tile type
 		else {
-			if (currentHeight <= seaLevel) {
-				tile.type = Tile.Type.Water;
+			if (currentHeight <= deepWaterEnd){
+				tile.type = Tile.Type.Deep_Water;
+			} else if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd){
+				tile.type = Tile.Type.Shallow_Water;			
 			} else if (currentHeight >= sandStartHeight && currentHeight <= sandEndHeight) {
 				tile.type = Tile.Type.Sand;
 			} else if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight) {
@@ -151,7 +167,7 @@ public class World : MonoBehaviour
 				tile.type = Tile.Type.Grass;
 
 			} else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
-				tile.type = Tile.Type.Cobble;
+				tile.type = Tile.Type.Smooth_Stone;
 			} else {			
 				tile.type = Tile.Type.Void;	
 			}

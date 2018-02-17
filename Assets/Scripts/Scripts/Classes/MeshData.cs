@@ -9,32 +9,26 @@ public class MeshData
     public List<int> triangles;
 
 	public MeshData (int x, int y, int width, int height, bool mountainLayer = false)
-    {
-        vertices = new List<Vector3>();
-        triangles = new List<int>();
+	{
+		vertices = new List<Vector3> ();
+		triangles = new List<int> ();
 		UVs = new List<Vector2> ();
 
-		if (mountainLayer) 
-		{
-
-			for (int i = x; i < width + x;i++)
-			{
-				for (int j = y; j < height + y; j++)
-				{
-					CreateSquareWithQuads(i, j);
+		if (!mountainLayer) {
+			for (int i = x; i < width + x; i++) {
+				for (int j = y; j < height + y; j++) {
+					CreateSquare (i, j);
 				}
 			}
-
 		}
-
-        for (int i = x; i < width + x;i++)
-        {
-            for (int j = y; j < height + y; j++)
-            {
-                CreateSquare(i, j);
-            }
-        }
-    }
+		if (mountainLayer) {
+			for (int i = x; i < width + x; i++) {
+				for (int j = y; j < height + y; j++) {
+					CreateSquareWithQuads (i, j);
+				}
+			}
+		}
+	}
 
 	//takes position of tile
     void CreateSquare ( int x, int y)

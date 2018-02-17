@@ -82,6 +82,7 @@ public class MouseManager : MonoBehaviour {
 					if (t != null) 
 					{
 						t.type = Tile.Type.Smooth_Stone;
+						t.wall = Tile.Wall.Brick;
 					}
 				}
 			}
@@ -97,8 +98,6 @@ public class MouseManager : MonoBehaviour {
 						{
 							previousTile = t;
 							World.instance.OnTileTypeChange (t.chunkNumber);
-
-
 						}
 
 						if (t.chunkNumber != previousTile.chunkNumber)

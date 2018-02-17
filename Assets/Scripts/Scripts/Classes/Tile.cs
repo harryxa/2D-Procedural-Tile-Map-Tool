@@ -14,7 +14,7 @@ public class Tile
 	public Wall wall;
 
 
-
+	public int mountainChunkNumber;
 	public int chunkNumber;
 	public bool changed = false;
 
@@ -23,8 +23,8 @@ public class Tile
 	//constructor to create and assign tile
 	public Tile (Type type, Wall wall = Wall.Empty)
 	{
-		this.type = type;
 		this.wall = wall;
+		this.type = type;
 	}
 
 	public int ChunkNumber {
@@ -33,6 +33,15 @@ public class Tile
 		}
 		set {
 			chunkNumber = value;
+		}
+	}
+
+	public int MountainChunkNumber {
+		get {
+			return mountainChunkNumber;
+		}
+		set {
+			mountainChunkNumber = value;
 		}
 	}
 

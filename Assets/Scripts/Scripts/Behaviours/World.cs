@@ -81,7 +81,6 @@ public class World : MonoBehaviour
 		SubdivideMountainArray ();
 	}
 	
-	float randomizeTileTimer= 2f;
 
 	void Update () 
 	{
@@ -130,30 +129,31 @@ public class World : MonoBehaviour
 	{
 		//if tile hasnt been initialised return new tile type
 
-		if (tile == null) {
-			if (currentHeight <= deepWaterEnd)
+		if (tile == null) 
+		{
+			if (currentHeight <= deepWaterEnd) {
 				return new Tile (Tile.Type.Deep_Water);
-			else if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd)
+			}
+			if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd) {
 				return new Tile (Tile.Type.Shallow_Water);
-			else if (currentHeight >= sandStartHeight && currentHeight <= sandEndHeight)
+			}
+			if (currentHeight >= sandStartHeight && currentHeight <= sandEndHeight) {
 				return new Tile (Tile.Type.Sand);
-			else if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight)
+			}
+			if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight) {
 				return new Tile (Tile.Type.Dirt);
-			else if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
+			}
+			if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
 				//TODO: repeat changes in else
 				return new Tile (Tile.Type.Grass);
-			} else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
-
-				if (currentHeight >= mountainStartHeight) 
-				{
+			} 
+			if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
+				if (currentHeight >= mountainStartHeight) {
 					return new Tile (Tile.Type.Smooth_Stone, Tile.Wall.Brick);
-					Debug.Log ("hello");
 				}
-				
-				
+
 				return new Tile (Tile.Type.Smooth_Stone);
-			}
-			
+			}			
 			return new Tile (Tile.Type.Void);
 		} 
 		//else change tile type
@@ -171,7 +171,8 @@ public class World : MonoBehaviour
 
 			} else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) 
 			{
-				if (currentHeight >= mountainStartHeight) {
+				if (currentHeight >= mountainStartHeight) 
+				{
 					tile.wall = Tile.Wall.Brick;
 				}
 				
@@ -348,9 +349,7 @@ public class World : MonoBehaviour
 		data = new MeshData(x, y, width, height, true);
 
 		//new chunk gameobject, child of world, with id
-
 		GameObject meshGO = new GameObject("MountainLayer " + meshGOMountainvalue);
-
 
 		MeshGameObject meshScript = meshGO.AddComponent<MeshGameObject> ();
 
@@ -378,7 +377,7 @@ public class World : MonoBehaviour
 		{
 			for (int j = y; j < y + height; j++) 
 			{
-				tiles [i, j].ChunkNumber = meshGOMountainvalue;
+				tiles [i, j].MountainChunkNumber = meshGOMountainvalue;
 			}
 		}
 

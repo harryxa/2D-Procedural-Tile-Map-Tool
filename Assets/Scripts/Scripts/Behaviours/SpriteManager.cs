@@ -60,4 +60,26 @@ public class SpriteManager : MonoBehaviour
 			return tileUVMap ["Void"];
 		}
 	}
+
+
+
+	public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant)
+	{
+		if (wall == Tile.Wall.Empty)
+			return tileUVMap ["Empty"];
+
+		string key = wall.ToString () + "_" + quadrant.ToString ();
+
+		if (tileUVMap.ContainsKey (key) == true) {
+			return tileUVMap [key];
+		} else {
+
+			Debug.LogError ("No UV map for tile type: " + key);
+			return tileUVMap ["Void"];
+		}
+
+	}
+
+
+
 }

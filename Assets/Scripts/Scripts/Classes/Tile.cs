@@ -8,13 +8,24 @@ public class Tile
 {
 	
     public enum Type { Dirt, Grass, Smooth_Stone, Deep_Water, Shallow_Water, Sand, Void }
-
-
 	public Type type;
+
+	public enum Wall { Brick, Empty }
+	public Wall wall;
+
+
+
 	public int chunkNumber;
 	public bool changed = false;
 
 	InstalledObjects installedObjects;
+
+	//constructor to create and assign tile
+	public Tile (Type type, Wall wall = Wall.Empty)
+	{
+		this.type = type;
+		this.wall = wall;
+	}
 
 	public int ChunkNumber {
 		get {
@@ -45,9 +56,5 @@ public class Tile
 		}
 	}
 
-	//constructor to create and assign tile
-    public Tile (Type type)
-    {
-		this.type = type;
-    }
+
 }

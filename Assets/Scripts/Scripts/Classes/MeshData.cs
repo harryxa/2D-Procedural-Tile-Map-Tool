@@ -58,24 +58,25 @@ public class MeshData
 	{
 
 		Tile tile = World.instance.GetTileAt(x, y);
+		Tile[] neighbours = World.instance.GetNeighbours (x, y, true);
 
 		//in order of quads
 		//1st quad: x += 0.5, y += 0.5
-		CreateQuadrant(tile, x + 0.5f, y + 0.5f, 1);
+		CreateQuadrant(tile, x + 0.5f, y + 0.5f, 1, neighbours);
 
 		//2nd quad: x += 0.5, y += 0
-		CreateQuadrant(tile, x + 0.5f, y + 0f, 2);
+		CreateQuadrant(tile, x + 0.5f, y + 0f, 2, neighbours);
 
 		//3rd quad: x += 0, y += 0
-		CreateQuadrant(tile, x + 0f, y + 0f, 3);
+		CreateQuadrant(tile, x + 0f, y + 0f, 3, neighbours);
 
 		//4th quad: x += 0, y += 0.5
-		CreateQuadrant(tile, x + 0f, y + 0.5f, 4);
+		CreateQuadrant(tile, x + 0f, y + 0.5f, 4, neighbours);
 
 
 	}
 
-	void CreateQuadrant(Tile tile, float x, float y, int quadrant)
+	void CreateQuadrant(Tile tile, float x, float y, int quadrant, Tile[] neighbours)
 	{
 		//gets tile at x, y coords
 		 
@@ -94,7 +95,7 @@ public class MeshData
 		triangles.Add(vertices.Count - 4);
 
 		//returns tile uv coords for that type of tile
-		UVs.AddRange(SpriteManager.instance.GetWallUVsAtQuadrant(tile.wall, quadrant));
+		UVs.AddRange(SpriteManager.instance.GetWallUVsAtQuadrant(tile.wall, quadrant, neighbours));
 	}
 
 

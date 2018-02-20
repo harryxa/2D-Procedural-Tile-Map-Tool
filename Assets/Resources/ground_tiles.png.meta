@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9718c34ae410bb94697ad350d4698cde
-timeCreated: 1518876692
+timeCreated: 1519131591
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -34,26 +34,26 @@ TextureImporter:
     21300054: ground_tiles_27
     21300056: Ice
     21300058: Void
-    21300060: ground_tiles_0
-    21300062: ground_tiles_5
-    21300064: ground_tiles_6
-    21300066: ground_tiles_7
+    21300060: Brick_4Corner
+    21300062: Brick_4N
+    21300064: Brick_1N
+    21300066: Brick_1Corner
     21300068: Brick_4
     21300070: Brick_1
-    21300072: ground_tiles_11
-    21300074: ground_tiles_14
-    21300076: ground_tiles_18
+    21300072: Brick_1E
+    21300074: Brick_4W
+    21300076: Brick_3W
     21300078: Brick_3
     21300080: Brick_2
-    21300082: ground_tiles_24
-    21300084: ground_tiles_28
-    21300086: ground_tiles_29
-    21300088: ground_tiles_30
-    21300090: ground_tiles_31
-    21300092: ground_tiles_32
-    21300094: ground_tiles_33
-    21300096: ground_tiles_34
-    21300098: ground_tiles_35
+    21300082: Brick_2E
+    21300084: Brick_2S
+    21300086: Brick_2Corner
+    21300088: Brick_3S
+    21300090: Brick_3Corner
+    21300092: Brick_4iCorner
+    21300094: Brick_1iCorner
+    21300096: Brick_2iCorner
+    21300098: Brick_3iCorner
     21300100: Empty
   serializedVersion: 4
   mipmaps:
@@ -511,7 +511,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_0
+      name: Brick_4Corner
       rect:
         serializedVersion: 2
         x: 128
@@ -524,7 +524,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_5
+      name: Brick_4N
       rect:
         serializedVersion: 2
         x: 144
@@ -537,7 +537,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_6
+      name: Brick_1N
       rect:
         serializedVersion: 2
         x: 160
@@ -550,7 +550,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_7
+      name: Brick_1Corner
       rect:
         serializedVersion: 2
         x: 176
@@ -589,7 +589,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_11
+      name: Brick_1E
       rect:
         serializedVersion: 2
         x: 176
@@ -602,7 +602,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_14
+      name: Brick_4W
       rect:
         serializedVersion: 2
         x: 128
@@ -615,7 +615,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_18
+      name: Brick_3W
       rect:
         serializedVersion: 2
         x: 128
@@ -654,12 +654,12 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_24
+      name: Brick_2E
       rect:
         serializedVersion: 2
         x: 176
         y: 112
-        width: 15
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -667,7 +667,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_28
+      name: Brick_2S
       rect:
         serializedVersion: 2
         x: 160
@@ -680,7 +680,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_29
+      name: Brick_2Corner
       rect:
         serializedVersion: 2
         x: 176
@@ -693,7 +693,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_30
+      name: Brick_3S
       rect:
         serializedVersion: 2
         x: 144
@@ -706,7 +706,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_31
+      name: Brick_3Corner
       rect:
         serializedVersion: 2
         x: 128
@@ -719,7 +719,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_32
+      name: Brick_4iCorner
       rect:
         serializedVersion: 2
         x: 192
@@ -732,7 +732,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_33
+      name: Brick_1iCorner
       rect:
         serializedVersion: 2
         x: 208
@@ -745,7 +745,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_34
+      name: Brick_2iCorner
       rect:
         serializedVersion: 2
         x: 208
@@ -758,7 +758,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ground_tiles_35
+      name: Brick_3iCorner
       rect:
         serializedVersion: 2
         x: 192

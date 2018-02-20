@@ -81,12 +81,14 @@ public class SpriteManager : MonoBehaviour
 
 
 
-    public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant)
+	public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant, Tile[] neighbours)
 	{
 		if (wall == Tile.Wall.Empty)
 			return tileUVMap ["Empty"];
 
-		string key = wall.ToString () + "_" + quadrant.ToString ();
+		string key = GetKeyForWall (wall, neighbours, quadrant);
+
+
 
 		if (tileUVMap.ContainsKey (key) == true) {
 			return tileUVMap [key];
@@ -96,6 +98,113 @@ public class SpriteManager : MonoBehaviour
 			return tileUVMap ["Void"];
 		}
 
+	}
+
+	string GetKeyForWall(Tile.Wall wall, Tile[] neighbours, int quadrant)
+	{
+		string key = wall.ToString() + "_" + quadrant.ToString ();
+
+		if (quadrant == 1) 
+		{
+			if (IsWallEmptyOrNull (neighbours [0]) && IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [4])) {
+				key += "Corner";
+				return key;
+			}
+
+			if (!IsWallEmptyOrNull (neighbours [0]) && !IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [4])) {
+				key += "iCorner";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [0])) {
+				key += "N";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [1])){
+				key += "E";
+				return key;
+			}
+		}
+
+		if (quadrant == 2) 
+		{
+			if (IsWallEmptyOrNull (neighbours [2]) && IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [5])) {
+				key += "Corner";
+				return key;
+			}
+
+			if (!IsWallEmptyOrNull (neighbours [2]) && !IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [5])) {
+				key += "iCorner";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [2])) {
+				key += "S";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [1])){
+				key += "E";
+				return key;
+			}
+		}
+
+		if (quadrant == 3) 
+		{
+			if (IsWallEmptyOrNull (neighbours [2]) && IsWallEmptyOrNull (neighbours [3]) && IsWallEmptyOrNull (neighbours [6])) {
+				key += "Corner";
+				return key;
+			}
+
+			if (!IsWallEmptyOrNull (neighbours [2]) && !IsWallEmptyOrNull (neighbours [3]) && IsWallEmptyOrNull (neighbours [6])) {
+				key += "iCorner";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [2])) {
+				key += "S";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [3])){
+				key += "W";
+				return key;
+			}
+		}
+
+		if (quadrant == 4) 
+		{
+			if (IsWallEmptyOrNull (neighbours [0]) && IsWallEmptyOrNull (neighbours [3]) && IsWallEmptyOrNull (neighbours [7])) {
+				key += "Corner";
+				return key;
+			}
+
+			if (!IsWallEmptyOrNull (neighbours [0]) && !IsWallEmptyOrNull (neighbours [3]) && IsWallEmptyOrNull (neighbours [7])) {
+				key += "iCorner";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [0])) {
+				key += "N";
+				return key;
+			}
+
+			if (IsWallEmptyOrNull (neighbours [3])){
+				key += "W";
+				return key;
+			}
+		}
+
+		return key;
+	}
+
+	bool IsWallEmptyOrNull(Tile tile)
+	{
+		if (tile == null || tile.wall == Tile.Wall.Empty)
+			return true;
+
+		return false;
 	}
 
 

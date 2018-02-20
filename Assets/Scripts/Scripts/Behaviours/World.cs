@@ -394,8 +394,6 @@ public class World : MonoBehaviour
 		meshGOMountainvalue++;
 	}
 
-
-
     public Tile GetTileAt (int x, int y)
     {
         if (x < 0 || x >= width || y < 0 || y >= height)
@@ -406,5 +404,33 @@ public class World : MonoBehaviour
         return tiles[x, y];
     }
 
+	public Tile[] GetNeighbours(int x, int y, bool diagonals = false)
+	{
+		//conditional operator(-? x : y) for reference
+		//same as:
+		//if (diagonals)
+		//	return 8;
+		//else return 4;
+
+		Tile[] neighbours = new Tile[diagonals? 8 : 4];
+
+		// N E S W
+		neighbours[0] = GetTileAt(x + 0, y + 1);
+		neighbours[1] = GetTileAt(x + 1, y + 0);
+		neighbours[2] = GetTileAt(x + 0, y - 1);
+		neighbours[3] = GetTileAt(x - 1, y + 0);
+
+		//NE SE SW NW
+		if (diagonals == true) 
+		{
+			neighbours[4] = GetTileAt(x + 1, y + 1);
+			neighbours[5] = GetTileAt(x + 1, y - 1);
+			neighbours[6] = GetTileAt(x - 1, y - 1);
+			neighbours[7] = GetTileAt(x - 1, y + 1);
+		}
+
+		return neighbours;
+
+	}
 
 }

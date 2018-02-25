@@ -86,7 +86,7 @@ public class World : MonoBehaviour
 	void Update () 
 	{
 		if (randomiseMap == true) {
-			//RandomizeMap ();
+			RandomizeMap ();
 			randomiseMap = false;
 		}
 	}
@@ -94,7 +94,7 @@ public class World : MonoBehaviour
 	//redraws chunk dependant on the chunk number
 	public void OnTileTypeChange (int chunkNumber, int MountainChunkNumber)
 	{
-       
+       //update chunk mesh
 		GameObject chunk = GameObject.Find ("CHUNK " + chunkNumber);
 		MeshFilter chunkFilter = chunk.GetComponent<MeshFilter> ();
 		Mesh chunkMesh = chunkFilter.mesh;
@@ -103,6 +103,7 @@ public class World : MonoBehaviour
 		data.RewriteUV (meshScript.X, meshScript.Y, meshScript.Width, meshScript.Height);
 		chunkMesh.uv = data.UVs.ToArray ();
 
+        //update mountainlayer mesh
         GameObject mountainChunk = GameObject.Find("MountainLayer " + MountainChunkNumber);
         MeshFilter mountainFilter = mountainChunk.GetComponent<MeshFilter>();
         Mesh mountainMesh = mountainFilter.mesh;
@@ -110,9 +111,6 @@ public class World : MonoBehaviour
 
         MountainData.RewriteMountainUV(mountainMeshScript.X, mountainMeshScript.Y, mountainMeshScript.Width, mountainMeshScript.Height);
         mountainMesh.uv = MountainData.UVs.ToArray();
-
-
-
     }
 
 	//create an array of tiles with a type
@@ -195,7 +193,7 @@ public class World : MonoBehaviour
 		}
 	}
 
-	/*void RandomizeMap()
+	void RandomizeMap()
 	{		
 		int value = Random.Range (-10000, 10000);
 		noise.Seed = value;
@@ -215,10 +213,14 @@ public class World : MonoBehaviour
 				tiles[i,j] = SetTileAtHeight(noiseValues[i,j], tiles[i,j]);           
 			}
 		}	
-		for (int i = 0; i < meshGOvalue; i++) {
-			OnTileTypeChange (i);
-		}
-	}*/
+		for (int i = 0; i < meshGOMountainvalue; i++)
+        {
+            for(int j = 0; j < meshGOMountainvalue; j++)
+            {
+                OnTileTypeChange(i, j);
+            }
+        }
+	}
 
 	//GROUND TILES
 	//divide tile array into increments to create 100 x 100 mesh

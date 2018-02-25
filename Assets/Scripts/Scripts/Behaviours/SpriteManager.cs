@@ -80,7 +80,6 @@ public class SpriteManager : MonoBehaviour
     }
 
 
-
 	public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant, Tile[] neighbours)
 	{
 		if (wall == Tile.Wall.Empty)

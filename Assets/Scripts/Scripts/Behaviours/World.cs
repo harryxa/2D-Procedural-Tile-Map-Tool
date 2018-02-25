@@ -53,12 +53,14 @@ public class World : MonoBehaviour
 
     void Awake()
     {
-		if (instance != null) {
+		if (instance != null) 
+		{
 			Debug.Log ("more instances of world, why?");
 		}
         instance = this;
 
-		if (randomSeed == true) {
+		if (randomSeed == true) 
+		{
 			int value = Random.Range (-10000, 10000);
 			seed = value.ToString ();
 		}
@@ -85,14 +87,15 @@ public class World : MonoBehaviour
 
 	void Update () 
 	{
-		if (randomiseMap == true) {
+		if (randomiseMap == true) 
+		{
 			RandomizeMap ();
 			randomiseMap = false;
 		}
 	}
 
 	//redraws chunk dependant on the chunk number
-	public void OnTileTypeChange (int chunkNumber, int MountainChunkNumber)
+	public void OnTileTypeChange (int chunkNumber)
 	{
        //update chunk mesh
 		GameObject chunk = GameObject.Find ("CHUNK " + chunkNumber);
@@ -102,16 +105,15 @@ public class World : MonoBehaviour
 
 		data.RewriteUV (meshScript.X, meshScript.Y, meshScript.Width, meshScript.Height);
 		chunkMesh.uv = data.UVs.ToArray ();
-
-        //update mountainlayer mesh
-        GameObject mountainChunk = GameObject.Find("MountainLayer " + MountainChunkNumber);
-        MeshFilter mountainFilter = mountainChunk.GetComponent<MeshFilter>();
-        Mesh mountainMesh = mountainFilter.mesh;
-        MeshGameObject mountainMeshScript = mountainChunk.GetComponent<MeshGameObject>();
-
-        MountainData.RewriteMountainUV(mountainMeshScript.X, mountainMeshScript.Y, mountainMeshScript.Width, mountainMeshScript.Height);
-        mountainMesh.uv = MountainData.UVs.ToArray();
     }
+
+	public void OnMountainChange (int MountainChunkNumber)
+	{
+		//update mountainlayer mesh
+		GameObject mountainChunk = GameObject.Find("MountainLayer " + MountainChunkNumber);
+
+		Destroy (mountainChunk);
+	}
 
 	//create an array of tiles with a type
     void CreateTile()
@@ -165,7 +167,8 @@ public class World : MonoBehaviour
 			return new Tile (Tile.Type.Void);
 		} 
 		//else change tile type
-		else {
+		else
+		{
 			if (currentHeight <= deepWaterEnd){
 				tile.type = Tile.Type.Deep_Water;
 			} else if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd){
@@ -177,7 +180,8 @@ public class World : MonoBehaviour
 			} else if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
 				tile.type = Tile.Type.Grass;
 
-			} else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) 
+			} 
+			else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) 
 			{
 				if (currentHeight >= mountainStartHeight) 
 				{
@@ -209,17 +213,22 @@ public class World : MonoBehaviour
 		{
 			for(int j = 0; j < height; j ++)
 			{
+				tiles[i,j].wall = Tile.Wall.Empty;
 				//initalise each tile in tiles array
-				tiles[i,j] = SetTileAtHeight(noiseValues[i,j], tiles[i,j]);           
+				tiles[i,j] = SetTileAtHeight(noiseValues[i,j], tiles[i,j]);  
+
 			}
 		}	
-		for (int i = 0; i < meshGOMountainvalue; i++)
-        {
-            for(int j = 0; j < meshGOMountainvalue; j++)
-            {
-                OnTileTypeChange(i, j);
-            }
+		for (int i = 0; i < meshGOvalue; i++)
+		{ 
+			OnTileTypeChange(i);
         }
+		for(int j = 0; j < meshGOMountainvalue; j++)
+		{
+			OnMountainChange (j);
+		}
+
+		SubdivideMountainArray ();
 	}
 
 	//GROUND TILES
@@ -432,7 +441,5 @@ public class World : MonoBehaviour
 		}
 
 		return neighbours;
-
 	}
-
 }

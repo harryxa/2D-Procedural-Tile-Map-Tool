@@ -39,17 +39,6 @@ public class MouseManager : MonoBehaviour
             cursor.SetActive(false);
         }
 
-        //      left click mouse click
-        //		if (Input.GetMouseButtonUp (0)) 
-        //		{
-        //			if (tileUnderMouse != null) {
-        //				tileUnderMouse.type = Tile.Type.Void;
-        //				Debug.Log (tileUnderMouse.chunkNumber);
-        //				World.instance.OnTileTypeChange (tileUnderMouse.chunkNumber);
-        //			}
-        //		}
-
-
         if (Input.GetMouseButtonDown(0))
         {
             dragStart = currMousePos;
@@ -105,11 +94,11 @@ public class MouseManager : MonoBehaviour
                         if (previousTile == null)
                         {
                             previousTile = t;
-                            World.instance.OnTileTypeChange(t.chunkNumber, t.mountainChunkNumber);
+                            World.instance.OnTileTypeChange(t.chunkNumber);
                         }
 
                         if (t.chunkNumber != previousTile.chunkNumber)
-                            World.instance.OnTileTypeChange(t.chunkNumber, t.mountainChunkNumber);
+                            World.instance.OnTileTypeChange(t.chunkNumber);
 
                         previousTile = t;
                     }

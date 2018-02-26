@@ -18,7 +18,7 @@ public class World : MonoBehaviour
 	MeshData data;
     MeshData MountainData;
 	int meshGOvalue = 0;
-	int meshGOMountainvalue = 0;
+	public int meshGOMountainvalue = 0;
 
 	public bool randomiseMap = false;
 	public string seed;
@@ -107,12 +107,23 @@ public class World : MonoBehaviour
 		chunkMesh.uv = data.UVs.ToArray ();
     }
 
-	public void OnMountainChange (int MountainChunkNumber)
+	public void OnMountainChange ()
 	{
+		
 		//update mountainlayer mesh
-		GameObject mountainChunk = GameObject.Find("MountainLayer " + MountainChunkNumber);
 
-		Destroy (mountainChunk);
+		for (int j = 0; j < meshGOMountainvalue; j++) 
+		{
+			GameObject mountainChunk = GameObject.Find("MountainLayer " + j);
+
+
+			Destroy (mountainChunk);
+		}
+
+		meshGOMountainvalue = 0;
+
+		SubdivideMountainArray ();
+
 	}
 
 	//create an array of tiles with a type
@@ -223,12 +234,11 @@ public class World : MonoBehaviour
 		{ 
 			OnTileTypeChange(i);
         }
-		for(int j = 0; j < meshGOMountainvalue; j++)
-		{
-			OnMountainChange (j);
-		}
 
-		SubdivideMountainArray ();
+		OnMountainChange ();
+
+
+		//SubdivideMountainArray ();
 	}
 
 	//GROUND TILES
@@ -321,7 +331,7 @@ public class World : MonoBehaviour
 
 
 	//MOUNTAIN TILES
-	void SubdivideMountainArray( int index1 = 0, int index2 = 0)
+	public void SubdivideMountainArray( int index1 = 0, int index2 = 0)
 	{
 		//get size of chunk
 		int sizeX;
@@ -386,6 +396,7 @@ public class World : MonoBehaviour
 		MeshRenderer render = meshGO.AddComponent<MeshRenderer>();
 		render.material = material;
 
+		render.sortingOrder = 1;
 		Mesh mesh = filter.mesh;
 
 		//create vertices, triangles and uvs from meshdata

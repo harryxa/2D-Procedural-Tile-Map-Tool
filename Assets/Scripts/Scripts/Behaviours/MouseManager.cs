@@ -78,10 +78,11 @@ public class MouseManager : MonoBehaviour
                     if (t != null)
                     {
                         t.type = Tile.Type.Smooth_Stone;
-                        //t.wall = Tile.Wall.Brick;
+                        t.wall = Tile.Wall.Brick;
                     }
                 }
             }
+
 
             for (int x = startX; x <= endX; x++)
             {
@@ -99,11 +100,13 @@ public class MouseManager : MonoBehaviour
 
                         if (t.chunkNumber != previousTile.chunkNumber)
                             World.instance.OnTileTypeChange(t.chunkNumber);
+						
 
                         previousTile = t;
                     }
                 }
             }
+			World.instance.OnMountainChange();
         }
 
         //screen dragging using middle and right click

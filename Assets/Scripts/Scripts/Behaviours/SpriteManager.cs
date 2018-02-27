@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpriteManager : MonoBehaviour 
+public class SpriteManager : MonoBehaviour
 {
 	public static SpriteManager instance;
 
 	Dictionary<string, Vector2[]> tileUVMap;
 
-	void Awake () 
+	void Awake ()
 	{
 		instance = this;
 		tileUVMap = new Dictionary<string, Vector2[]> ();
@@ -20,8 +20,7 @@ public class SpriteManager : MonoBehaviour
 		float imageHeight = 0f;
 
 		//finds the size of the sprite in image
-		foreach (Sprite s in sprites) 
-		{
+		foreach (Sprite s in sprites) {
 			if (s.rect.x + s.rect.width > imageWidth)
 				imageWidth = s.rect.x + s.rect.width;
 
@@ -30,24 +29,21 @@ public class SpriteManager : MonoBehaviour
 		}
 
 		//calculates uvs for texture
-		foreach (Sprite s in sprites) 
-		{
+		foreach (Sprite s in sprites) {
 			Vector2[] uvs = new Vector2[4];
 
 			uvs [0] = new Vector2 (s.rect.x / imageWidth, s.rect.y / imageHeight);
 			uvs [1] = new Vector2 ((s.rect.x + s.rect.width) / imageWidth, s.rect.y / imageHeight);
-			uvs [2] = new Vector2 (s.rect.x / imageWidth, (s.rect.y + s.rect.height)/ imageHeight);
+			uvs [2] = new Vector2 (s.rect.x / imageWidth, (s.rect.y + s.rect.height) / imageHeight);
 			uvs [3] = new Vector2 ((s.rect.x + s.rect.width) / imageWidth, (s.rect.y + s.rect.height) / imageHeight);
 
 			//returns  coords of tile uv map
 			tileUVMap.Add (s.name, uvs);
-
-			//Debug.LogFormat (s.name + ": " + uvs [0] + ", " + uvs [1] + ", " + uvs [2] + ", " + uvs [3]);
 		}
 	}
 
 
-	//returns coords of uv map for tile 
+	//returns coords of uv map for tile
 	public Vector2[] GetTileUvs (Tile tile)
 	{
 		string key = tile.type.ToString ();
@@ -62,25 +58,22 @@ public class SpriteManager : MonoBehaviour
 		}
 	}
 
-    public Vector2[] GetMountainTileUvs(Tile tile)
-    {
-        string key = tile.wall.ToString();
+	public Vector2[] GetMountainTileUvs (Tile tile)
+	{
+		string key = tile.wall.ToString ();
 
-        if (tileUVMap.ContainsKey(key) == true)
-        {
+		if (tileUVMap.ContainsKey (key) == true) {
 
-            return tileUVMap[key];
-        }
-        else
-        {
+			return tileUVMap [key];
+		} else {
 
-            Debug.LogError("No UV map for tile type: " + key);
-            return tileUVMap["Void"];
-        }
-    }
+			Debug.LogError ("No UV map for tile type: " + key);
+			return tileUVMap ["Void"];
+		}
+	}
 
 
-	public Vector2[] GetWallUVsAtQuadrant(Tile.Wall wall, int quadrant, Tile[] neighbours)
+	public Vector2[] GetWallUVsAtQuadrant (Tile.Wall wall, int quadrant, Tile[] neighbours)
 	{
 		if (wall == Tile.Wall.Empty)
 			return tileUVMap ["Empty"];
@@ -99,12 +92,11 @@ public class SpriteManager : MonoBehaviour
 
 	}
 
-	string GetKeyForWall(Tile.Wall wall, Tile[] neighbours, int quadrant)
+	string GetKeyForWall (Tile.Wall wall, Tile[] neighbours, int quadrant)
 	{
-		string key = wall.ToString() + "_" + quadrant.ToString ();
+		string key = wall.ToString () + "_" + quadrant.ToString ();
 
-		if (quadrant == 1) 
-		{
+		if (quadrant == 1) {
 			if (IsWallEmptyOrNull (neighbours [0]) && IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [4])) {
 				key += "Corner";
 				return key;
@@ -120,14 +112,13 @@ public class SpriteManager : MonoBehaviour
 				return key;
 			}
 
-			if (IsWallEmptyOrNull (neighbours [1])){
+			if (IsWallEmptyOrNull (neighbours [1])) {
 				key += "E";
 				return key;
 			}
 		}
 
-		if (quadrant == 2) 
-		{
+		if (quadrant == 2) {
 			if (IsWallEmptyOrNull (neighbours [2]) && IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [5])) {
 				key += "Corner";
 				return key;
@@ -143,14 +134,13 @@ public class SpriteManager : MonoBehaviour
 				return key;
 			}
 
-			if (IsWallEmptyOrNull (neighbours [1])){
+			if (IsWallEmptyOrNull (neighbours [1])) {
 				key += "E";
 				return key;
 			}
 		}
 
-		if (quadrant == 3) 
-		{
+		if (quadrant == 3) {
 			if (IsWallEmptyOrNull (neighbours [2]) && IsWallEmptyOrNull (neighbours [3]) && IsWallEmptyOrNull (neighbours [6])) {
 				key += "Corner";
 				return key;
@@ -166,14 +156,13 @@ public class SpriteManager : MonoBehaviour
 				return key;
 			}
 
-			if (IsWallEmptyOrNull (neighbours [3])){
+			if (IsWallEmptyOrNull (neighbours [3])) {
 				key += "W";
 				return key;
 			}
 		}
 
-		if (quadrant == 4) 
-		{
+		if (quadrant == 4) {
 			if (IsWallEmptyOrNull (neighbours [0]) && IsWallEmptyOrNull (neighbours [3]) && IsWallEmptyOrNull (neighbours [7])) {
 				key += "Corner";
 				return key;
@@ -189,7 +178,7 @@ public class SpriteManager : MonoBehaviour
 				return key;
 			}
 
-			if (IsWallEmptyOrNull (neighbours [3])){
+			if (IsWallEmptyOrNull (neighbours [3])) {
 				key += "W";
 				return key;
 			}
@@ -198,7 +187,7 @@ public class SpriteManager : MonoBehaviour
 		return key;
 	}
 
-	bool IsWallEmptyOrNull(Tile tile)
+	bool IsWallEmptyOrNull (Tile tile)
 	{
 		if (tile == null || tile.wall == Tile.Wall.Empty)
 			return true;

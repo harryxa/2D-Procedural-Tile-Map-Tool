@@ -6,19 +6,27 @@ using System;
 //tile class represents all the tiles in the  world
 public class Tile
 {
-	
-    public enum Type { Dirt, Grass, Smooth_Stone, Deep_Water, Shallow_Water, Sand, Void }
-	public Type type;
-
-	public enum Wall { Brick, Empty }
-	public Wall wall;
-
-
-	public int mountainChunkNumber;
-	public int chunkNumber;
 	public bool changed = false;
 
-	InstalledObjects installedObjects;
+	public enum Type
+	{
+		Dirt,
+		Grass,
+		Smooth_Stone,
+		Deep_Water,
+		Shallow_Water,
+		Sand,
+		Void
+	}
+	public Type type;
+
+	public enum Wall
+	{
+		Brick,
+		Empty
+
+	}
+	public Wall wall;
 
 	//constructor to create and assign tile
 	public Tile (Type type, Wall wall = Wall.Empty)
@@ -27,6 +35,8 @@ public class Tile
 		this.type = type;
 	}
 
+	//Tiles are told which mesh they belong to
+	public int chunkNumber;
 	public int ChunkNumber {
 		get {
 			return chunkNumber;
@@ -36,6 +46,7 @@ public class Tile
 		}
 	}
 
+	public int mountainChunkNumber;
 	public int MountainChunkNumber {
 		get {
 			return mountainChunkNumber;
@@ -45,6 +56,7 @@ public class Tile
 		}
 	}
 
+	//Coords for the tile
 	int x;
 	public int X {
 		get {
@@ -64,6 +76,4 @@ public class Tile
 			y = value;
 		}
 	}
-
-
 }

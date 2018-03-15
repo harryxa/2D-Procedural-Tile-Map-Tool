@@ -56,7 +56,7 @@ public class World : MonoBehaviour
 		instance = this;
 
 		if (randomSeed == true) {
-			int value = Random.Range (-10000, 10000);
+			int value = Random.Range (-1000, 1000);
 			seed = value.ToString ();
 		}
 

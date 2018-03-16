@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+
 
 public class World : MonoBehaviour
 {
@@ -9,6 +11,10 @@ public class World : MonoBehaviour
 
 	//perlin noise
 	Noise noise;
+    
+	int treecount = 10;
+
+
 
 	//randomising map variables
 	public bool randomiseMap = false;
@@ -22,8 +28,9 @@ public class World : MonoBehaviour
 	//Mesh variables
 	MeshData data;
 	MeshData MountainData;
-	public Material material; //gets the tiles spritesheet
-	int meshGOvalue = 0;
+	public Material material;
+	//gets the tiles spritesheet
+	public int meshGOvalue = 0;
 	public int meshGOMountainvalue = 0;
 
 	//Procedural generation variables
@@ -47,6 +54,8 @@ public class World : MonoBehaviour
 	float cobbleStartHeight;
 	public float cobbleEndHeight;
 	public float mountainStartHeight;
+	public float treeStartHeight;
+	public float treeEndHeight;
 
 	void Awake ()
 	{
@@ -68,6 +77,7 @@ public class World : MonoBehaviour
 		grassStartHeight = dirtEndHeight;
 		cobbleStartHeight = grassEndHeight;
 
+
 	}
 
 	void Start ()
@@ -76,7 +86,6 @@ public class World : MonoBehaviour
 		CreateTile ();
 		//divide tile array into increments to create 100 x 100 tile mesh
 		SubdivideTilesArray (); 
-
 		SubdivideMountainArray ();
 	}
 
@@ -125,6 +134,11 @@ public class World : MonoBehaviour
 				return new Tile (Tile.Type.Dirt);
 			}
 			if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
+				
+				if (currentHeight >= treeStartHeight && currentHeight <= treeEndHeight) {					
+					return new Tile (Tile.Type.Tree);									
+				}	
+
 				//TODO: repeat changes in else
 				return new Tile (Tile.Type.Grass);
 			} 
@@ -148,8 +162,13 @@ public class World : MonoBehaviour
 			} else if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight) {
 				tile.type = Tile.Type.Dirt;				
 			} else if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
-				tile.type = Tile.Type.Grass;
+				if (currentHeight >= mountainStartHeight) {
+					if (Random.Range (0, 1) > 0.1) {
+						tile.type = Tile.Type.Tree;
+					}
+				}
 
+				tile.type = Tile.Type.Grass;
 			} else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
 				if (currentHeight >= mountainStartHeight) {
 					tile.wall = Tile.Wall.Brick;
@@ -198,7 +217,7 @@ public class World : MonoBehaviour
 		}
 	}
 
-	//create mesh from MeshData 
+	//create mesh from MeshData
 	void GenerateTilesLayer (int x, int y, int width, int height)
 	{
 		//create mesh of squares and using tiles[,] gets the right uvs etc, using GetTileAt()
@@ -338,7 +357,6 @@ public class World : MonoBehaviour
 		for (int j = 0; j < meshGOMountainvalue; j++) {
 			GameObject mountainChunk = GameObject.Find ("MountainLayer " + j);
 
-
 			Destroy (mountainChunk);
 		}
 
@@ -374,7 +392,7 @@ public class World : MonoBehaviour
 
 		OnMountainChange ();
 	}
-		
+
 	public Tile GetTileAt (int x, int y)
 	{
 		if (x < 0 || x >= width || y < 0 || y >= height) {
@@ -409,5 +427,24 @@ public class World : MonoBehaviour
 		}
 
 		return neighbours;
+	}
+
+
+	public void save ()
+	{
+		Tile[] tiles2D = new Tile[tiles.Length];
+
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				for (int x = 0; x < tiles2D.Length; x++) {
+					tiles2D [x] = tiles [i, j];
+				}
+			}
+		}
+
+		string filePath = Application.dataPath + "/world.txt";
+		string tileJson = JsonUtility.ToJson (tiles2D);
+
+		File.WriteAllText (filePath, tileJson);
 	}
 }

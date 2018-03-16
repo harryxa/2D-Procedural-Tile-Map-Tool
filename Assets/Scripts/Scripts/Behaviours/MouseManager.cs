@@ -165,4 +165,31 @@ public class MouseManager : MonoBehaviour
 		tileSelected.wall = Tile.Wall.Empty;
 	}
 
+	public void Save()
+	{
+		World.instance.save ();
+	}
+
+	public void PleaseLoad()
+	{
+		//SaveLoad.LoadMap ();
+
+		for (int i = 0; i < World.instance.width; i++) 
+		{
+			for (int j = 0; j < World.instance.height; j++) 
+			{				
+				//World.instance.tiles = SaveLoad.LoadMap();
+			}
+		}
+
+
+
+		World.instance.OnMountainChange ();
+		for (int i = 0; i < World.instance.meshGOvalue; i++) 
+		{
+			World.instance.OnTileTypeChange (i);
+
+		}
+	}
+
 }

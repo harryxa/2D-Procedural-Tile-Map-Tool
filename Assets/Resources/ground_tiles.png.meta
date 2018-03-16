@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 9718c34ae410bb94697ad350d4698cde
-timeCreated: 1519604385
+timeCreated: 1521215014
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -55,7 +55,7 @@ TextureImporter:
     21300096: Brick_2iCorner
     21300098: Brick_3iCorner
     21300100: Empty
-    21300102: tree
+    21300102: Tree
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -785,15 +785,15 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tree
+      name: Tree
       rect:
         serializedVersion: 2
-        x: 224
-        y: 192
+        x: 64
+        y: 128
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

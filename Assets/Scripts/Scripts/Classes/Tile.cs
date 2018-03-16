@@ -4,8 +4,10 @@ using UnityEngine;
 using System;
 
 //tile class represents all the tiles in the  world
+[Serializable]
 public class Tile
 {
+    
 	public bool changed = false;
 
 	public enum Type
@@ -16,6 +18,7 @@ public class Tile
 		Deep_Water,
 		Shallow_Water,
 		Sand,
+		Tree,
 		Void
 	}
 	public Type type;
@@ -24,7 +27,6 @@ public class Tile
 	{
 		Brick,
 		Empty
-
 	}
 	public Wall wall;
 

@@ -12,7 +12,7 @@ public class World : MonoBehaviour
 	//perlin noise
 	Noise noise;
     
-	int treecount = 10;
+	//int treecount = 10;
 
 
 

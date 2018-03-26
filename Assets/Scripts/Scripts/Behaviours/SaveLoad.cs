@@ -1,64 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
-using System.Runtime.Serialization.Formatters.Binary;
+
 using System.IO;
 using System;
 
+public class SaveLoad : MonoBehaviour
+{
+	public Tile currentTile;
 
-public static class SaveLoad
-{    
-	
+	char tileTypeChar;
+	string fileString = "";
+	public const string fileName = "LatestSave.txt";
 
-//    public static void SaveMap()
-//    {
-//		string file_path = Application.dataPath + "/world.sav";
-//		StreamWriter stream = new StreamWriter (file_path);
-//
-//		stream.
-//
-//		stream.Close ();
-//
-//		Debug.Log ("saved map to: " + file_path);
-//
-//
-//    }
-	public static void SaveMap()
-	{
+	public void CreateTextFile()	{
 
+		StreamWriter sr = File.CreateText(fileName);
+		sr.WriteLine("Save File: ");
+
+		for (int j = World.instance.height - 1; j >= 0 ; j--)
+		{		
+			for (int i = 0; i < World.instance.width; i++)
+			{
+				currentTile = new Tile(World.instance.GetTileAt(i, j).type);
+
+				switch (currentTile.type)
+				{
+				case Tile.Type.Dirt:
+					tileTypeChar = 'D';
+					break;
+				case Tile.Type.Grass:
+					tileTypeChar = 'G';
+					break;
+				case Tile.Type.Smooth_Stone:
+					tileTypeChar = 'C';
+					break;
+				case Tile.Type.Deep_Water:
+					tileTypeChar = 'W';
+					break;
+				case Tile.Type.Shallow_Water:
+					tileTypeChar = 'w';
+					break;
+				case Tile.Type.Sand:
+					tileTypeChar = 'S';
+					break;
+				case Tile.Type.Tree:
+					tileTypeChar = 'T';
+					break;
+				case Tile.Type.Void:
+					tileTypeChar = 'X';
+					break;
+				default:
+					break;
+				}
+
+				fileString = fileString + tileTypeChar + " ";
+			}
+			sr.WriteLine(fileString);
+			fileString = "";
+		}
+
+		//sr.WriteLine("I can write ints {0} or floats {1}, and so on.", 1, 4.2);
+		sr.Close();
 	}
-
-//	public static void LoadMap()
-//	{
-//		string file_path = Application.dataPath + "/world.txt";
-//
-//		if(File.Exists(file_path))
-//		{
-//			BinaryFormatter bf = new BinaryFormatter();
-//			StreamReader stream = new StreamReader(file_path, FileMode.Open);
-//
-//			//WorldData data = bf.Deserialize(stream) as WorldData;
-//
-//			stream.Close ();
-//
-//			//Debug.Log (data.worldTiles [0, 0].Y);
-//		}
-//	}
 }
-
-//[Serializable]
-//public class WorldData
-//{
-//	public Tile[,] worldTiles;
-//
-//	public  WorldData()
-//	{
-//		for (int i = 0; i < World.instance.width; i++) {
-//			for (int j = 0; j < World.instance.height; j++) {				
-//				//initalise each tile in tiles array
-//				worldTiles [i, j] =  World.instance.GetTileAt(i,j);
-//				Debug.Log ("hello");
-//			}
-//		}
-//	}
-//}

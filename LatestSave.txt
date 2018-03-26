@@ -1,0 +1,21 @@
+Save File: 
+G G G G G G C C C G G G G D G G G G G G 
+G G G G G G C C C G G G G D G G G G G T 
+G G G G G G C C G G G G D w G G G C G G 
+G C G G G G G G G G G G w w G G G C C G 
+G G G G G G G G G G G G G S G G G G G G 
+G G G G G G G C C G G G G G G G G G G G 
+G G D W W G G C C C C C G G G G G G G S 
+G G w W W S G G C C C C C G G G G G G S 
+G G W W W G G G C G G G G G G G G G D D 
+G D W W D G G G G G G G G G G G G G S G 
+D W W W G G C C G G G G G G D D S w w G 
+W W W D G C C C G S S D G S W W W W S G 
+W W W G C C C G G S G G G G w W W W G G 
+D W W G G G G G D D G G C G G D W W G G 
+G G S G G G G G S G G G C C G G G S G G 
+G G G D G G G S S G G G C C C G G D S D 
+G G G G G G G G G G G C C C C G G D S D 
+G G G G G G G G G G G C C C G G D S G G 
+G G G G G G G G G G G G C G G G S D G G 
+G G G G G G G G G G G G G G G G G G G G 

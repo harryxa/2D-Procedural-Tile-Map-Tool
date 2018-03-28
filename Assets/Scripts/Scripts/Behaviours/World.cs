@@ -116,7 +116,7 @@ public class World : MonoBehaviour
 	}
 
 	//Sets the tiles type based on its perlin noise value
-	Tile SetTileAtHeight (float currentHeight, Tile tile = null)
+	public Tile SetTileAtHeight (float currentHeight, Tile tile = null)
 	{
 		//if tile hasnt been initialised return new tile type
 
@@ -350,23 +350,32 @@ public class World : MonoBehaviour
 
 	//deletes mountain mesh and redraws(redraws all atm)
 	public void OnMountainChange ()
-	{
-		
+	{		
 		//update mountainlayer mesh
-
-		for (int j = 0; j < meshGOMountainvalue; j++) {
+		for (int j = 0; j < meshGOMountainvalue; j++)
+        {
 			GameObject mountainChunk = GameObject.Find ("MountainLayer " + j);
-
 			Destroy (mountainChunk);
 		}
 
 		meshGOMountainvalue = 0;
-
 		SubdivideMountainArray ();
-
 	}
 
-	void RandomizeMap ()
+    public void LoadMap()
+    {
+        //update mountainlayer mesh
+        for (int j = 0; j < meshGOvalue; j++)
+        {
+            GameObject Chunk = GameObject.Find("CHUNK " + j);
+            Destroy(Chunk);
+        }
+
+        meshGOvalue = 0;
+        SubdivideTilesArray();
+    }
+
+    void RandomizeMap ()
 	{		
 		int value = Random.Range (-10000, 10000);
 		noise.Seed = value;

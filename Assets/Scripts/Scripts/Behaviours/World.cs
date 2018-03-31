@@ -11,19 +11,15 @@ public class World : MonoBehaviour
 
 	//perlin noise
 	Noise noise;
-    
-	//int treecount = 10;
-
-
 
 	//randomising map variables
 	public bool randomiseMap = false;
-	public bool randomSeed;
+	private bool randomSeed;
 
 	//determines size of mesh
 	public int width;
 	public int height;
-	public int chunkSize = 50;
+	private int chunkSize = 127;
 
 	//Mesh variables
 	MeshData data;
@@ -34,12 +30,12 @@ public class World : MonoBehaviour
 	public int meshGOMountainvalue = 0;
 
 	//Procedural generation variables
-	public string seed;
-	public float frequency;
+	public string seed;         
+	public float frequency;     //frequency of samples
 	public float amplitude;
 	public float lacunarity;
 	public float persistance;
-	public int octaves;
+	public int octaves;         //how many perlin noise values are going to be added together
 
 	//Tile height values
 	public float deepWaterEnd;
@@ -59,16 +55,20 @@ public class World : MonoBehaviour
 
 	void Awake ()
 	{
-		if (instance != null) {
+		if (instance != null)
+        {
 			Debug.Log ("more instances of world, why?");
 		}
 		instance = this;
 
-		if (randomSeed == true) {
+		if (randomSeed == true)
+        {
 			int value = Random.Range (-1000, 1000);
 			seed = value.ToString ();
 		}
 
+        //instantiate noise with appropriate values
+        //GetHashCode() returns an int, effectively turning the string number into a int
 		noise = new Noise (seed.GetHashCode (), frequency, amplitude, lacunarity, persistance, octaves);
 
 		shallowWaterStart = deepWaterEnd;
@@ -105,9 +105,11 @@ public class World : MonoBehaviour
 		//returns a perlin noise value
 		float[,] noiseValues = noise.GetNoiseValues (width, height);
 
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {				
-				//initalise each tile in tiles array
+		for (int i = 0; i < width; i++)
+        {
+			for (int j = 0; j < height; j++)
+            {				
+                //sets each tiles height value for the heightmap
 				tiles [i, j] = SetTileAtHeight (noiseValues [i, j]);
 				tiles [i, j].X = i;
 				tiles [i, j].Y = j;
@@ -119,31 +121,36 @@ public class World : MonoBehaviour
 	public Tile SetTileAtHeight (float currentHeight, Tile tile = null)
 	{
 		//if tile hasnt been initialised return new tile type
-
 		if (tile == null) {
-			if (currentHeight <= deepWaterEnd) {
+			if (currentHeight <= deepWaterEnd)
+            {
 				return new Tile (Tile.Type.Deep_Water);
 			}
-			if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd) {
+			if (currentHeight >= shallowWaterStart && currentHeight <= shallowWaterEnd)
+            {
 				return new Tile (Tile.Type.Shallow_Water);
 			}
-			if (currentHeight >= sandStartHeight && currentHeight <= sandEndHeight) {
+			if (currentHeight >= sandStartHeight && currentHeight <= sandEndHeight)
+            {
 				return new Tile (Tile.Type.Sand);
 			}
-			if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight) {
+			if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight)
+            {
 				return new Tile (Tile.Type.Dirt);
 			}
-			if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
+			if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight)
+            {
 				
-				if (currentHeight >= treeStartHeight && currentHeight <= treeEndHeight) {					
+				if (currentHeight >= treeStartHeight && currentHeight <= treeEndHeight)
+                {					
 					return new Tile (Tile.Type.Tree);									
 				}	
-
-				//TODO: repeat changes in else
 				return new Tile (Tile.Type.Grass);
 			} 
-			if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
-				if (currentHeight >= mountainStartHeight) {
+			if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight)
+            {
+				if (currentHeight >= mountainStartHeight)
+                {
 					return new Tile (Tile.Type.Smooth_Stone, Tile.Wall.Brick);
 				}
 
@@ -190,13 +197,13 @@ public class World : MonoBehaviour
 		int sizeY;
 
 		//x axis
-
-		//if tiles along x - start of chunk > chunk size
+		//tiles along x - start of chunk > chunk size
 		if (tiles.GetLength (0) - index1 > chunkSize) {
 			sizeX = chunkSize;
 		} else {
 			sizeX = tiles.GetLength (0) - index1;
 		}
+
 		//y axis
 		if (tiles.GetLength (1) - index2 > chunkSize) {
 			sizeY = chunkSize;
@@ -204,14 +211,14 @@ public class World : MonoBehaviour
 			sizeY = tiles.GetLength (1) - index2;
 		}
 
-		//generate 100 x 100 tile mesh 
+		//generate tile mesh of specified size 
 		GenerateTilesLayer (index1, index2, sizeX, sizeY);
 
-		if (tiles.GetLength (0) >= index1 + chunkSize) {
+		if (tiles.GetLength (0) > index1 + chunkSize) {
 			SubdivideTilesArray (index1 + chunkSize, index2);
 			return;
 		}
-		if (tiles.GetLength (1) >= index2 + chunkSize) {
+		if (tiles.GetLength (1) > index2 + chunkSize) {
 			SubdivideTilesArray (0, index2 + chunkSize);
 			return;
 		}
@@ -225,15 +232,14 @@ public class World : MonoBehaviour
 
 		//new chunk gameobject, child of world, with id
 		GameObject meshGO = new GameObject ("CHUNK " + meshGOvalue);
+        meshGO.transform.SetParent(this.transform);
 
-		//adds mesh script to GameObjects
-		MeshGameObject meshScript = meshGO.AddComponent<MeshGameObject> ();
+        //adds mesh script to GameObjects, the mesh is therefore aware of certain variables
+        MeshGameObject meshScript = meshGO.AddComponent<MeshGameObject> ();
 		meshScript.X = x;
 		meshScript.Y = y;
 		meshScript.Width = width;
 		meshScript.Height = height;
-
-		meshGO.transform.SetParent (this.transform);
 
 		//add a mesh filter and renderer
 		MeshFilter filter = meshGO.AddComponent <MeshFilter> ();

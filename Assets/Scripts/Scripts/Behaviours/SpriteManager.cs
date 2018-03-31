@@ -42,7 +42,7 @@ public class SpriteManager : MonoBehaviour
 		}
 	}
 
-
+    //GROUND
 	//returns coords of uv map for tile
 	public Vector2[] GetTileUvs (Tile tile)
 	{
@@ -51,27 +51,28 @@ public class SpriteManager : MonoBehaviour
 		if (tileUVMap.ContainsKey (key) == true) {
             
 			return tileUVMap [key];
-		} else {
+		}
+        else {
 
 			Debug.LogError ("No UV map for tile type: " + key);
 			return tileUVMap ["Void"];
 		}
 	}
 
-	public Vector2[] GetMountainTileUvs (Tile tile)
-	{
-		string key = tile.wall.ToString ();
+    //MOUNTAINS
+	//public Vector2[] GetMountainTileUvs (Tile tile)
+	//{
+	//	string key = tile.wall.ToString ();
 
-		if (tileUVMap.ContainsKey (key) == true) {
+	//	if (tileUVMap.ContainsKey (key) == true) {
 
-			return tileUVMap [key];
-		} else {
+	//		return tileUVMap [key];
+	//	} else {
 
-			Debug.LogError ("No UV map for tile type: " + key);
-			return tileUVMap ["Void"];
-		}
-	}
-
+	//		Debug.LogError ("No UV map for tile type: " + key);
+	//		return tileUVMap ["Void"];
+	//	}
+	//}
 
 	public Vector2[] GetWallUVsAtQuadrant (Tile.Wall wall, int quadrant, Tile[] neighbours)
 	{
@@ -80,8 +81,6 @@ public class SpriteManager : MonoBehaviour
 
 		string key = GetKeyForWall (wall, neighbours, quadrant);
 
-
-
 		if (tileUVMap.ContainsKey (key) == true) {
 			return tileUVMap [key];
 		} else {
@@ -89,14 +88,15 @@ public class SpriteManager : MonoBehaviour
 			Debug.LogError ("No UV map for tile type: " + key);
 			return tileUVMap ["Void"];
 		}
-
 	}
 
+    //checks quads neighbouring tiles to assign correct texture
 	string GetKeyForWall (Tile.Wall wall, Tile[] neighbours, int quadrant)
 	{
 		string key = wall.ToString () + "_" + quadrant.ToString ();
 
-		if (quadrant == 1) {
+		if (quadrant == 1)
+        {
 			if (IsWallEmptyOrNull (neighbours [0]) && IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [4])) {
 				key += "Corner";
 				return key;
@@ -118,7 +118,9 @@ public class SpriteManager : MonoBehaviour
 			}
 		}
 
-		if (quadrant == 2) {
+		if (quadrant == 2)
+        {
+          
 			if (IsWallEmptyOrNull (neighbours [2]) && IsWallEmptyOrNull (neighbours [1]) && IsWallEmptyOrNull (neighbours [5])) {
 				key += "Corner";
 				return key;
@@ -183,7 +185,6 @@ public class SpriteManager : MonoBehaviour
 				return key;
 			}
 		}
-
 		return key;
 	}
 

@@ -82,44 +82,52 @@ public class Noise
 
 	public float[,] GetNoiseValues (int width, int height)
 	{
-		float[,] noiseValues = new float[width, height];
+		float[,] noiseValue = new float[width, height];
+
 
 		float max = 0f;
-		float min = float.MaxValue;
+		float min = float.MaxValue; //largest floating point possible
 
-		for (int i = 0; i < width; i++)
+
+        for (int i = 0; i < width; i++)
 		{
 			for (int j = 0; j < height; j++)
 			{
-				noiseValues [i, j] = 0f;
+				noiseValue [i, j] = 0f;
 
+                //frequency and amplitude are modified within the loop so... 
+                //are reassigned the correct value afterwards
 				float tempA = amplitude;
 				float tempF = frequency;
 
+                //loop through octaves
 				for (int k = 0; k < octaves; k++)
 				{
-					noiseValues [i, j] += Mathf.PerlinNoise ((i  + seed) / (float)width * frequency, j / (float)height * frequency) * amplitude;
-					frequency *= lacunarity;
+                    //width and height cast to floats otherwise it returns an integar. The value will always return the same if so
+					noiseValue [i, j] += Mathf.PerlinNoise ((i  + seed) / (float)width * frequency, j / (float)height * frequency) * amplitude;
+                                        
+                    frequency *= lacunarity;
 					amplitude *= persistance;
 				}
 				amplitude = tempA;
 				frequency = tempF;
 
-				if (noiseValues [i, j] > max)
-					max = noiseValues [i, j];
-				if (noiseValues [i, j] < min)
-					min = noiseValues [i, j];
+				if (noiseValue [i, j] > max)
+					max = noiseValue [i, j];
+				if (noiseValue [i, j] < min)
+					min = noiseValue [i, j];
 			}
 		}
 
+        
 		for(int i = 0; i <width; i++)
 		{
 			for(int j = 0; j <height; j++)
 			{
-
-				noiseValues[i,j] = Mathf.InverseLerp(max, min, noiseValues[i,j]);
+                //sets noise values between 0 and 1, scaled appropriately
+				noiseValue[i,j] = Mathf.InverseLerp(max, min, noiseValue[i,j]);
 			}
 		}
-		return noiseValues;
+		return noiseValue;
 	}
 }

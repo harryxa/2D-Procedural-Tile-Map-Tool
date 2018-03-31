@@ -14,9 +14,12 @@ public class MeshData
 		triangles = new List<int> ();
 		UVs = new List<Vector2> ();
 
-		if (!mountainLayer) {
-			for (int i = x; i < width + x; i++) {
-				for (int j = y; j < height + y; j++) {
+		if (!mountainLayer)
+        {
+			for (int i = x; i < width + x; i++)
+            {
+				for (int j = y; j < height + y; j++)
+                {
 					CreateSquare (i, j);
 				}
 			}

@@ -42,16 +42,18 @@ public class MouseManager : MonoBehaviour
 		}
 
 
-		// left click mouse click
-		if (Input.GetMouseButtonUp (0)) {
-
+		// left click mouse click, for changing tiles
+		if (Input.GetMouseButtonUp (0))
+        {
 			Tile previousTile = null;
+
+            //mouse positions for click and drag 
 			int startX = Mathf.FloorToInt (dragStart.x);
 			int endX = Mathf.FloorToInt (currMousePos.x);
-
 			int startY = Mathf.FloorToInt (dragStart.y);
 			int endY = Mathf.FloorToInt (currMousePos.y);
 
+            //keeps values positive
 			if (endX < startX) {
 				int temp = endX;
 				endX = startX;
@@ -63,31 +65,39 @@ public class MouseManager : MonoBehaviour
 				startY = temp;
 			}
 
-			for (int x = startX; x <= endX; x++) {
-				for (int y = startY; y <= endY; y++) {
+            //changes tile type, doesnt redraw the texture though
+			for (int x = startX; x <= endX; x++)
+            {
+				for (int y = startY; y <= endY; y++)
+                {
 					Tile t = World.instance.GetTileAt (x, y);
 
-					if (t != null) {
+					if (t != null)
+                    {
 						t.type = tileSelected.type;
 						t.wall = tileSelected.wall;
 					}
 				}
 			}
 
-
-			for (int x = startX; x <= endX; x++) {
-				for (int y = startY; y <= endY; y++) {
+            //redraws the chunk or chunks that have been edited.
+            //Also, deletes all mountain meshs and reinitialises them with new textures, if edited.
+			for (int x = startX; x <= endX; x++)
+            {
+				for (int y = startY; y <= endY; y++)
+                {
 					Tile t = World.instance.GetTileAt (x, y);
 
-					if (t != null) {
-						if (previousTile == null) {
+					if (t != null)
+                    {
+						if (previousTile == null)
+                        {
 							previousTile = t;
 							World.instance.OnTileTypeChange (t.chunkNumber);
 						}
 
 						if (t.chunkNumber != previousTile.chunkNumber)
-							World.instance.OnTileTypeChange (t.chunkNumber);
-						
+							World.instance.OnTileTypeChange (t.chunkNumber);						
 
 						previousTile = t;
 					}
@@ -127,34 +137,45 @@ public class MouseManager : MonoBehaviour
 	public void OnStone ()
 	{
 		tileSelected.type = Tile.Type.Smooth_Stone;
-	}
+        tileSelected.wall = Tile.Wall.Empty;
 
-	public void OnGrass ()
+    }
+
+    public void OnGrass ()
 	{
 		tileSelected.type = Tile.Type.Grass;
-	}
+        tileSelected.wall = Tile.Wall.Empty;
 
-	public void OnSand ()
+    }
+
+    public void OnSand ()
 	{
 		tileSelected.type = Tile.Type.Sand;
-	}
+        tileSelected.wall = Tile.Wall.Empty;
 
-	public void OnShallowWater ()
+    }
+
+    public void OnShallowWater ()
 	{
 		tileSelected.type = Tile.Type.Shallow_Water;
-	}
+        tileSelected.wall = Tile.Wall.Empty;
 
-	public void OnDeepWater ()
+    }
+
+    public void OnDeepWater ()
 	{
 		tileSelected.type = Tile.Type.Deep_Water;
-	}
+        tileSelected.wall = Tile.Wall.Empty;
 
-	public void OnDirt ()
+    }
+
+    public void OnDirt ()
 	{
 		tileSelected.type = Tile.Type.Dirt;
-	}
+        tileSelected.wall = Tile.Wall.Empty;
+    }
 
-	public void OnMountains ()
+    public void OnMountains ()
 	{
 		tileSelected.wall = Tile.Wall.Brick;
 		tileSelected.type = Tile.Type.Smooth_Stone;

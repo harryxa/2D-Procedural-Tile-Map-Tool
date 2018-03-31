@@ -168,15 +168,19 @@ public class World : MonoBehaviour
 				tile.type = Tile.Type.Sand;
 			} else if (currentHeight >= dirtStartHeight && currentHeight <= dirtEndHeight) {
 				tile.type = Tile.Type.Dirt;				
-			} else if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight) {
-				if (currentHeight >= mountainStartHeight) {
-					if (Random.Range (0, 1) > 0.1) {
-						tile.type = Tile.Type.Tree;
-					}
+			}
+            else if (currentHeight >= grassStartHeight && currentHeight <= grassEndHeight)
+            {
+				if (currentHeight >= treeStartHeight && currentHeight <= treeEndHeight)
+                {					
+				    tile.type = Tile.Type.Tree;					
 				}
-
-				tile.type = Tile.Type.Grass;
-			} else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
+                else
+                {
+                    tile.type = Tile.Type.Grass;
+                }
+            }
+            else if (currentHeight >= cobbleStartHeight && currentHeight <= cobbleEndHeight) {
 				if (currentHeight >= mountainStartHeight) {
 					tile.wall = Tile.Wall.Brick;
 				}
